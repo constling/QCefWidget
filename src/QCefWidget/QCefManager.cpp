@@ -39,12 +39,16 @@ void QCefManager::initializeCef() {
 
   cefSettings_.persist_session_cookies = QCefGlobalSetting::persist_session_cookies ? 1 : 0;
   cefSettings_.persist_user_preferences = QCefGlobalSetting::persist_user_preferences ? 1 : 0;
-  cefSettings_.remote_debugging_port = QCefGlobalSetting::remote_debugging_port;
-  cefSettings_.no_sandbox = 1;
+  if (0 != QCefGlobalSetting::remote_debugging_port) {
+    cefSettings_.remote_debugging_port = QCefGlobalSetting::remote_debugging_port;
+  }
+  cefSettings_.no_sandbox = true;
   cefSettings_.pack_loading_disabled = 0;
   cefSettings_.multi_threaded_message_loop = 1;
   cefSettings_.windowless_rendering_enabled = QCefGlobalSetting::osr_enabled ? 1 : 0;
+#if CEF_VERSION_MAJOR < 109  // todo lingxing
   cefSettings_.ignore_certificate_errors = 1;
+#endif
 
 #ifndef NDEBUG
   cefSettings_.log_severity = LOGSEVERITY_INFO;

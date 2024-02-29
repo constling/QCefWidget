@@ -44,7 +44,7 @@ public:
     }
   }
 
-  bool OnRequest(scoped_refptr<CefResourceManager::Request> request) OVERRIDE {
+  bool OnRequest(scoped_refptr<CefResourceManager::Request> request) override {
     CEF_REQUIRE_IO_THREAD();
 
     const std::string& url = request->url();
@@ -113,18 +113,18 @@ bool loadBinaryResource(const char* resourceName, std::string& resourceData) {
 CefRefPtr<CefStreamReader> GetBinaryResourceReader(const char* resourceName) {
   QPair<int, QString> rcInfo;
   if (!getResourceId(resourceName, rcInfo))
-    return NULL;
+    return nullptr;
 
   DWORD dwSize;
   LPBYTE pBytes;
 
   if (loadBinaryResource(rcInfo.first, rcInfo.second, dwSize, pBytes)) {
     return CefStreamReader::CreateForHandler(
-      new CefByteReadHandler(pBytes, dwSize, NULL));
+      new CefByteReadHandler(pBytes, dwSize, nullptr));
   }
 
   NOTREACHED(); // The resource should be found.
-  return NULL;
+  return nullptr;
 }
 
 CefResourceManager::Provider*

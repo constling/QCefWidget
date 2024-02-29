@@ -74,7 +74,9 @@ bool QCefWidgetImpl::createBrowser(const QString& url) {
     // winsoft666:
     // Enable all plugins here.
     // If not set enabled, PDF will cannot be render correctly, even if add command lines in OnBeforeCommandLineProcessing function.
-    browserSettings.plugins = STATE_ENABLED;
+#if CEF_VERSION_MAJOR < 109
+    browserSettings.plugins = STATE_ENABLED;  //todo lingxing
+#endif
     browserSettings.windowless_frame_rate = browserSetting_.fps;
     browserSettings.background_color =
         CefColorSetARGB(browserSetting_.backgroundColor.alpha(),
@@ -97,7 +99,9 @@ bool QCefWidgetImpl::createBrowser(const QString& url) {
     // winsoft666:
     // Enable all plugins here.
     // If not set enabled, PDF will cannot be render correctly, even if add command lines in OnBeforeCommandLineProcessing function.
-    browserSettings.plugins = STATE_ENABLED;
+#if CEF_VERSION_MAJOR < 109
+    browserSettings.plugins = STATE_ENABLED;  //todo lingxing
+#endif
     browserSettings.background_color =
         CefColorSetARGB(browserSetting_.backgroundColor.alpha(),
                         browserSetting_.backgroundColor.red(),
@@ -169,7 +173,9 @@ bool QCefWidgetImpl::createDevTools(CefRefPtr<CefBrowser> targetBrowser) {
     // winsoft666:
     // Enable all plugins here.
     // If not set enabled, PDF will cannot be render correctly, even if add command lines in OnBeforeCommandLineProcessing function.
-    browserSettings.plugins = STATE_ENABLED;
+#if CEF_VERSION_MAJOR < 109
+    browserSettings.plugins = STATE_ENABLED;  //todo lingxing
+#endif
     browserSettings.windowless_frame_rate = browserSetting_.fps;
     browserSettings.background_color =
         CefColorSetARGB(browserSetting_.backgroundColor.alpha(),
@@ -188,7 +194,9 @@ bool QCefWidgetImpl::createDevTools(CefRefPtr<CefBrowser> targetBrowser) {
       windowInfo.ex_style |= WS_EX_NOACTIVATE;
     }
 
-    browserSettings.plugins = STATE_ENABLED;
+#if CEF_VERSION_MAJOR < 109
+    browserSettings.plugins = STATE_ENABLED;  //todo lingxing
+#endif
     browserSettings.background_color =
         CefColorSetARGB(browserSetting_.backgroundColor.alpha(),
                         browserSetting_.backgroundColor.red(),
@@ -384,7 +392,7 @@ void QCefWidgetImpl::unSubclassWindow(HWND hWnd) {
   if (hPreWndProc) {
     LONG_PTR hPreviousWndProc =
         SetWindowLongPtr(hWnd, GWLP_WNDPROC, hPreWndProc);
-    ALLOW_UNUSED_LOCAL(hPreviousWndProc);
+
     DCHECK_EQ(hPreviousWndProc,
               reinterpret_cast<LONG_PTR>(SubclassedWindowProc));
   }
@@ -905,10 +913,18 @@ void QCefWidgetImpl::visibleChangedNotify(bool visible) {
     return;
   if (visible) {
     host->WasHidden(false);
+#if CEF_VERSION_MAJOR < 109  //todo lingxing
     host->SendFocusEvent(true);
+#else
+    host->SetFocus(true);
+#endif
   }
   else {
+#if CEF_VERSION_MAJOR < 109  //todo lingxing
     host->SendFocusEvent(false);
+#else
+    host->SetFocus(false);
+#endif
     host->WasHidden(true);
   }
 }

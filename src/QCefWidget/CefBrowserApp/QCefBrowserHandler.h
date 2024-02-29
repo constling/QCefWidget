@@ -274,11 +274,12 @@ class QCefBrowserHandler : public CefClient,
                             const CefString& request_initiator,
                             bool& disable_default_handling) override;
 #endif
-
+#if CEF_VERSION_MAJOR < 109 todo lingxing
   virtual bool OnQuotaRequest(CefRefPtr<CefBrowser> browser,
                               const CefString& origin_url,
                               int64 new_size,
                               CefRefPtr<CefRequestCallback> callback) override;
+#endif
 
   virtual void OnRenderProcessTerminated(CefRefPtr<CefBrowser> browser,
                                          TerminationStatus status) override;
@@ -300,10 +301,11 @@ class QCefBrowserHandler : public CefClient,
                                    const CefString& url,
                                    bool& allow_os_execution) override;
 #elif CEF_VERSION_MAJOR >= 76
-  virtual CefResourceRequestHandler::ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
+//todo lingxing
+  /* virtual CefResourceRequestHandler::ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
                        CefRefPtr<CefFrame> frame,
                        CefRefPtr<CefRequest> request,
-                       CefRefPtr<CefRequestCallback> callback) override;
+                       CefRefPtr<CefRequestCallback> callback) override;*/
 
   virtual CefRefPtr<CefResourceHandler> GetResourceHandler(CefRefPtr<CefBrowser> browser,
                      CefRefPtr<CefFrame> frame,
@@ -317,39 +319,39 @@ class QCefBrowserHandler : public CefClient,
 #pragma endregion CefRequestHandler
 
 #pragma region CefRenderHandler
-  bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) OVERRIDE;
+  bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
   bool GetScreenPoint(CefRefPtr<CefBrowser> browser,
                       int viewX,
                       int viewY,
                       int& screenX,
-                      int& screenY) OVERRIDE;
-  void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) OVERRIDE;
+                      int& screenY) override;
+  void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
   bool GetScreenInfo(CefRefPtr<CefBrowser> browser,
-                     CefScreenInfo& screen_info) OVERRIDE;
-  void OnPopupShow(CefRefPtr<CefBrowser> browser, bool show) OVERRIDE;
-  void OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& rect) OVERRIDE;
+                     CefScreenInfo& screen_info) override;
+  void OnPopupShow(CefRefPtr<CefBrowser> browser, bool show) override;
+  void OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& rect) override;
   void OnPaint(CefRefPtr<CefBrowser> browser,
                CefRenderHandler::PaintElementType type,
                const CefRenderHandler::RectList& dirtyRects,
                const void* buffer,
                int width,
-               int height) OVERRIDE;
+               int height) override;
 
 #if CEF_VERSION_MAJOR == 72 || CEF_VERSION_MAJOR == 74 || CEF_VERSION_MAJOR == 76 || CEF_VERSION_MAJOR == 86 || CEF_VERSION_MAJOR == 87
   void OnCursorChange(CefRefPtr<CefBrowser> browser,
                       CefCursorHandle cursor,
                       CursorType type,
-                      const CefCursorInfo& custom_cursor_info) OVERRIDE;
+                      const CefCursorInfo& custom_cursor_info) override;
 #elif CEF_VERSION_MAJOR >= 89
   bool OnCursorChange(CefRefPtr<CefBrowser> browser,
                       CefCursorHandle cursor,
                       cef_cursor_type_t type,
-                      const CefCursorInfo& custom_cursor_info) OVERRIDE;
+                      const CefCursorInfo& custom_cursor_info) override;
 #endif
   void OnImeCompositionRangeChanged(
       CefRefPtr<CefBrowser> browser,
       const CefRange& selection_range,
-      const CefRenderHandler::RectList& character_bounds) OVERRIDE;
+      const CefRenderHandler::RectList& character_bounds) override;
 #pragma endregion CefRenderHandler
 
   /////////////////////////////////////////////////////////////////////////

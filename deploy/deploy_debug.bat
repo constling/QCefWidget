@@ -1,7 +1,7 @@
 @echo off
 
 REM Update Qt Dir
-set QT_DIR=C:\Qt\Qt5.12.10\5.12.10\msvc2017
+set QT_DIR=C:\install\qt5\5.15.2\msvc2019
 
 set PATH=%QT_DIR%\bin;%PATH%
 

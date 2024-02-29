@@ -21,7 +21,7 @@ public:
   CustomResourceProvider(QCefResourceProvider* provider)
     : provider_(provider) {}
 
-  bool OnRequest(scoped_refptr<CefResourceManager::Request> request) OVERRIDE;
+  bool OnRequest(scoped_refptr<CefResourceManager::Request> request) override;
 
 private:
   QCefResourceProvider* provider_;

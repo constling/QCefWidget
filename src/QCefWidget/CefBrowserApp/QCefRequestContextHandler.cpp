@@ -4,6 +4,8 @@ RequestContextHandler::RequestContextHandler() {}
 
 RequestContextHandler::~RequestContextHandler() {}
 
+// todo lingxing
+/*
 bool RequestContextHandler::OnBeforePluginLoad(
   const CefString& mime_type,
   const CefString& plugin_url,
@@ -21,4 +23,4 @@ bool RequestContextHandler::OnBeforePluginLoad(
   }
 
   return false;
-}
+}*/

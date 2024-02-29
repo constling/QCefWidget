@@ -556,10 +556,18 @@ void QCefWidgetUIEventHandlerWin::OnFocusEvent(HWND hWnd,
     return;
 
   if (message == WM_SETFOCUS) {
+#if CEF_VERSION_MAJOR < 109  //todo lingxing
     host->SendFocusEvent(true);
+#else
+    host->SetFocus(true);
+#endif
   }
   else if (message == WM_KILLFOCUS) {
+#if CEF_VERSION_MAJOR < 109  //todo lingxing
     host->SendFocusEvent(false);
+#else
+    host->SetFocus(false);
+#endif
   }
 }
 

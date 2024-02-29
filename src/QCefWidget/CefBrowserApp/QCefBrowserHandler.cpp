@@ -368,9 +368,15 @@ void QCefBrowserHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
   }
   else if (browser->IsPopup()) {
     popupBrowserList_.push_back(browser);
+#if CEF_VERSION_MAJOR < 109  // todo lingxing
     CefPostTask(TID_UI,
                 CefCreateClosureTask(base::Bind(
                     &CefBrowserHost::SetFocus, browser->GetHost().get(), true)));
+#else
+    CefPostTask(TID_UI,
+                CefCreateClosureTask(base::BindRepeating(
+                    &CefBrowserHost::SetFocus, browser->GetHost().get(), true)));
+#endif
   }
 
   do {
@@ -574,6 +580,7 @@ CefRefPtr<CefResourceRequestHandler> QCefBrowserHandler::GetResourceRequestHandl
 }
 #endif
 
+#if CEF_VERSION_MAJOR < 109 todo lingxing
 bool QCefBrowserHandler::OnQuotaRequest(
     CefRefPtr<CefBrowser> browser,
     const CefString& origin_url,
@@ -584,6 +591,7 @@ bool QCefBrowserHandler::OnQuotaRequest(
   callback->Continue(new_size <= maxSize);
   return true;
 }
+#endif
 
 void QCefBrowserHandler::OnRenderProcessTerminated(
     CefRefPtr<CefBrowser> browser,
@@ -640,14 +648,15 @@ void QCefBrowserHandler::OnProtocolExecution(CefRefPtr<CefBrowser> browser,
 }
 
 #elif CEF_VERSION_MAJOR >= 76
-CefResourceRequestHandler::ReturnValue QCefBrowserHandler::OnBeforeResourceLoad(
+//todo lingxing
+/* CefResourceRequestHandler::ReturnValue QCefBrowserHandler::OnBeforeResourceLoad(
     CefRefPtr<CefBrowser> browser,
     CefRefPtr<CefFrame> frame,
     CefRefPtr<CefRequest> request,
     CefRefPtr<CefRequestCallback> callback) {
   return pResourceManager_->OnBeforeResourceLoad(
       browser, frame, request, callback);
-}
+}*/
 
 CefRefPtr<CefResourceHandler>
 QCefBrowserHandler::GetResourceHandler(CefRefPtr<CefBrowser> browser,
