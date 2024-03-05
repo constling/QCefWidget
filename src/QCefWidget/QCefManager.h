@@ -7,6 +7,7 @@
 #include <map>
 #include <qsystemdetection.h>
 #include <QObject>
+#include "Include/QCefDefine.h"
 
 class QWidget;
 class QCefWidgetImpl;
@@ -21,6 +22,9 @@ class QCefManager : public QObject {
   static QCefManager& getInstance();
   void initializeCef();
   void uninitializeCef();
+
+  void setAppInterface(QCefWeb::QCefWebAppInterface* app) { m_appInterface = app;}
+  QCefWeb::QCefWebAppInterface* appInterface() { return m_appInterface; }
 
   QWidget* addBrowser(QWidget* pCefWidget,
                       QCefWidgetImpl* impl,
@@ -86,5 +90,7 @@ class QCefManager : public QObject {
 
   std::recursive_mutex cefsMutex_;
   std::list<CefInfo> cefs_;
+
+  QCefWeb::QCefWebAppInterface *m_appInterface = nullptr;
 };
 #endif  // !QCEF_MANAGER_H_

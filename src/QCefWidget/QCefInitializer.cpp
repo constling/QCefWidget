@@ -8,3 +8,8 @@ void InitializeQCef() {
 void UnInitializeQCef() {
   QCefManager::getInstance().uninitializeCef();
 }
+
+void SetAppHandler(QCefWeb::QCefWebAppInterface* app)
+{
+  QCefManager::getInstance().setAppInterface(app);
+}

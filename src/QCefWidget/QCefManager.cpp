@@ -46,15 +46,9 @@ void QCefManager::initializeCef() {
   cefSettings_.pack_loading_disabled = 0;
   cefSettings_.multi_threaded_message_loop = 1;
   cefSettings_.windowless_rendering_enabled = QCefGlobalSetting::osr_enabled ? 1 : 0;
+  cefSettings_.log_severity = QCefGlobalSetting::loglevel;
 #if CEF_VERSION_MAJOR < 109  // todo lingxing
   cefSettings_.ignore_certificate_errors = 1;
-#endif
-
-#ifndef NDEBUG
-  cefSettings_.log_severity = LOGSEVERITY_INFO;
-  cefSettings_.remote_debugging_port = 7777;
-#else
-  cefSettings_.log_severity = LOGSEVERITY_WARNING;
 #endif
 
   app_ = new QCefBrowserApp();
@@ -71,6 +65,9 @@ void QCefManager::initializeCef() {
       assert(0);
   }
   initialized_ = true;
+  if (nullptr != m_appInterface) {
+      m_appInterface->onCefInitialized();
+  }
 }
 
 void QCefManager::uninitializeCef() {

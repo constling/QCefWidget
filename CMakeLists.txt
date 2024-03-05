@@ -121,4 +121,5 @@ add_subdirectory(src/QCefWidget)
 # Add demo
 ###############################################################
 add_subdirectory(test/QCefWidgetTest)
+add_subdirectory(test/QCefDemo)
 ###############################################################
