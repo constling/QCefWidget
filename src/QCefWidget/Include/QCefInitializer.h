@@ -5,6 +5,7 @@
 #include "QCefDefine.h"
 
 QCEFWIDGET_EXPORT void SetAppHandler(QCefWeb::QCefWebAppInterface* app);
+QCEFWIDGET_EXPORT bool SetGlobalCookie(const QCefWeb::tagCookieItem &item);
 QCEFWIDGET_EXPORT void InitializeQCef();
 QCEFWIDGET_EXPORT void UnInitializeQCef();
 

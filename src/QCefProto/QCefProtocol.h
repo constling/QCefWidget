@@ -12,10 +12,11 @@
 
 #define QCEF_QUERY_CANCEL_NAME "QCefWidgetQueryCancel"
 
-#define QCEF_OBJECT_NAME "QCefWidget"
+#define QCEF_OBJECT_NAME "Context"
+#define QCEF_SYNC_OBJECT_NNAME "ContextSync"
 
 // QCefWidget.invoke("method_name", ...)
-#define QCEF_INVOKEMETHOD "invoke"
+#define QCEF_INVOKEMETHOD "JSSendMessage"
 
 // QCefWidget.addEventListener(type, listener)
 #define QCEF_ADDEVENTLISTENER "addEventListener"

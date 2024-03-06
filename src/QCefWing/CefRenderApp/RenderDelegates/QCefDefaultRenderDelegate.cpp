@@ -1,6 +1,7 @@
 #include "QCefDefaultRenderDelegate.h"
 #include "QCefClient.h"
 
+
 namespace QCefDefaultRenderDelegate {
 void CreateBrowserDelegate(QCefRenderApp::RenderDelegateSet& delegates) {
   delegates.insert(new RenderDelegate());
@@ -27,9 +28,12 @@ void RenderDelegate::OnContextCreated(CefRefPtr<QCefRenderApp> app,
     // create and insert the QCefClient Object into this frame.window object
     CefRefPtr<CefV8Value> objWindow = context->GetGlobal();
     CefRefPtr<QCefClient> objClient = new QCefClient(browser, frame);
-    objWindow->SetValue(
-        QCEF_OBJECT_NAME, objClient->GetObject(), V8_PROPERTY_ATTRIBUTE_READONLY);
+    objWindow->SetValue(QCEF_OBJECT_NAME, objClient->GetObject(), V8_PROPERTY_ATTRIBUTE_READONLY);
     frame_id_to_client_map_[frameId] = objClient;
+
+    CefRefPtr<QSyncCefClient> synObjClient = new QSyncCefClient(browser, frame);
+    objWindow->SetValue(QCEF_SYNC_OBJECT_NNAME, synObjClient->GetObject(), V8_PROPERTY_ATTRIBUTE_READONLY);
+    sync_frame_id_to_client_map_[frameId] = synObjClient;
 
     objClient->SendBrowserContextCreatedMessage();
   }
@@ -45,6 +49,11 @@ void RenderDelegate::OnContextReleased(CefRefPtr<QCefRenderApp> app,
   auto it = frame_id_to_client_map_.find(frameId);
   if (it != frame_id_to_client_map_.end()) {
     frame_id_to_client_map_.erase(it);
+  }
+
+  auto itSync = sync_frame_id_to_client_map_.find(frameId);
+  if (itSync != sync_frame_id_to_client_map_.end()) {
+    sync_frame_id_to_client_map_.erase(itSync);
   }
 }
 

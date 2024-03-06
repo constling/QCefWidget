@@ -7,13 +7,6 @@
 #include "include/wrapper/cef_resource_manager.h"
 #include <QByteArray>
 
-// Retrieve a resource as a steam reader.
-CefRefPtr<CefStreamReader> GetBinaryResourceReader(const char* resourceName);
-
-// Create a new provider for loading binary resources.
-CefResourceManager::Provider*
-CreateBinaryResourceProvider(const std::string& urlPath,
-                             const std::string& resourcePathPrefix);
 
 class QCefResourceProvider;
 class CustomResourceProvider : public CefResourceManager::Provider {

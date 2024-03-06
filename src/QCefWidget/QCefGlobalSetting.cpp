@@ -20,7 +20,6 @@ int QCefGlobalSetting::remote_debugging_port = 9223;
 bool QCefGlobalSetting::gpu_enabled = true;
 bool QCefGlobalSetting::osr_enabled = true;
 cef_log_severity_t QCefGlobalSetting::loglevel = LOGSEVERITY_WARNING;
-QMap<QString, QPair<int, QString>> QCefGlobalSetting::resource_map;
 
 void QCefGlobalSetting::initializeInstance() {
   static QCefGlobalSetting s_instance;

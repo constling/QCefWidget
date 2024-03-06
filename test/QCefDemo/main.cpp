@@ -24,9 +24,7 @@ int main(int argc, char* argv[]) {
   MainWindow w;
   w.test();
   w.show();
-  //todo È¥µô
-    //QCefSetting::setResourceMap({{"login.html", {123, "PAGE"}}});
-
+ 
 
   /*CefWnd wnd(false, false);
   wnd.setGeometry(100, 100, 600, 600);
@@ -41,7 +39,6 @@ int main(int argc, char* argv[]) {
   wnd.setupUi();
   wnd.show();*/
   
-
   int iret = a.exec();
 
   UnInitializeQCef();

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "cefresourcehandler.h"
+#include "QCefInitializer.h"
 
 MainWindow::MainWindow(QWidget* parent) :
     CefWndBase<QWidget>(false, false, parent) {
@@ -11,14 +12,25 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::test() {
+
+    QCefWeb::tagCookieItem item;
+    item.name = "key";
+    item.value = "value";
+    item.domain = "localhost";
+    item.path = "/";
+    item.url = "http://localhost:8000/login.html";
+
+    bool result = SetGlobalCookie(item);
+
+    //SetGlobalCookie()
   m_cefWidget = new QCefWidget("", this);
   m_cefWidget->setObjectName("cefwidget");
   m_cefWidget->setOsrEnabled(false);
   m_cefWidget->setContextMenuEnabled(false);
   m_cefWidget->setAutoShowDevToolsContextMenu(false);
   m_cefWidget->setBrowserBackgroundColor(QColor(0, 0, 0));
-  m_cefWidget->setAllowExecuteUnknownProtocolViaOS(false);
-  m_cefWidget->setAutoDestoryCefWhenCloseEvent(false);
+  m_cefWidget->setAllowExecuteUnknownProtocolViaOS(true);
+  m_cefWidget->setAutoDestoryCefWhenCloseEvent(true);
   m_cefWidget->setGeometry(0, 0, 600, 600);
   m_cefWidget->addResourceProvider(new CefResourceHandler(), "123");
   m_cefWidget->navigateToUrl("http://localhost:8000/login.html");

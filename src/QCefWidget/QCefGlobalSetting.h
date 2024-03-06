@@ -26,7 +26,7 @@ class QCefGlobalSetting {
   static bool gpu_enabled;
   static bool osr_enabled;
   static cef_log_severity_t loglevel;
-  static QMap<QString, QPair<int, QString>> resource_map;
+
 
  protected:
   QCefGlobalSetting();

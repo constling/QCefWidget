@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include "../QCefRenderApp.h"
 #include "QCefClient.h"
+#include "QSyncCefClient.h"
 
 namespace QCefDefaultRenderDelegate {
 
@@ -12,6 +13,9 @@ void CreateBrowserDelegate(QCefRenderApp::RenderDelegateSet& delegates);
 class RenderDelegate : public QCefRenderApp::RenderDelegate {
   typedef std::unordered_map<int64, CefRefPtr<QCefClient>>
       FrameID2QCefClientMap;
+
+  typedef std::unordered_map<int64, CefRefPtr<QSyncCefClient>>
+      SyncFrameID2QCefClientMap;
 
  public:
   RenderDelegate();
@@ -49,6 +53,7 @@ class RenderDelegate : public QCefRenderApp::RenderDelegate {
   CefRefPtr<CefMessageRouterRendererSide> render_message_router_;
 
   FrameID2QCefClientMap frame_id_to_client_map_;
+  SyncFrameID2QCefClientMap sync_frame_id_to_client_map_;
 
  private:
   IMPLEMENT_REFCOUNTING(RenderDelegate);
