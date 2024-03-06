@@ -44,11 +44,6 @@ QCefBrowserHandler::QCefBrowserHandler(QCefWidgetImpl* pImpl) :
       consoleLogSteam_.setCodec("UTF-8");
     }
   }
-  const std::string& internalOrigin = "http://qcefwidget/";
-  pResourceManager_->AddProvider(
-      CreateBinaryResourceProvider(internalOrigin, std::string()),
-      100,
-      std::string());
 }
 
 QCefBrowserHandler::~QCefBrowserHandler() {
@@ -593,6 +588,7 @@ bool QCefBrowserHandler::OnQuotaRequest(
 }
 #endif
 
+
 void QCefBrowserHandler::OnRenderProcessTerminated(
     CefRefPtr<CefBrowser> browser,
     TerminationStatus status) {
@@ -647,16 +643,26 @@ void QCefBrowserHandler::OnProtocolExecution(CefRefPtr<CefBrowser> browser,
   }
 }
 
-#elif CEF_VERSION_MAJOR >= 76
+#elif CEF_VERSION_MAJOR < 109
 //todo lingxing
-/* CefResourceRequestHandler::ReturnValue QCefBrowserHandler::OnBeforeResourceLoad(
+ CefResourceRequestHandler::ReturnValue QCefBrowserHandler::OnBeforeResourceLoad(
     CefRefPtr<CefBrowser> browser,
     CefRefPtr<CefFrame> frame,
     CefRefPtr<CefRequest> request,
     CefRefPtr<CefRequestCallback> callback) {
   return pResourceManager_->OnBeforeResourceLoad(
       browser, frame, request, callback);
-}*/
+}
+
+#elif CEF_VERSION_MAJOR >= 109
+CefResourceRequestHandler::ReturnValue QCefBrowserHandler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
+                                           CefRefPtr<CefFrame> frame,
+                                           CefRefPtr<CefRequest> request,
+                                           CefRefPtr<CefCallback> callback) 
+{
+    return pResourceManager_->OnBeforeResourceLoad(
+      browser, frame, request, callback);
+}
 
 CefRefPtr<CefResourceHandler>
 QCefBrowserHandler::GetResourceHandler(CefRefPtr<CefBrowser> browser,

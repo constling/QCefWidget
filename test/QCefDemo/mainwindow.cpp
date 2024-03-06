@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "cefresourcehandler.h"
 
 MainWindow::MainWindow(QWidget* parent) :
     CefWndBase<QWidget>(false, false, parent) {
@@ -10,7 +11,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::test() {
-  m_cefWidget = new QCefWidget("https://test/login.html", this);
+  m_cefWidget = new QCefWidget("", this);
   m_cefWidget->setObjectName("cefwidget");
   m_cefWidget->setOsrEnabled(false);
   m_cefWidget->setContextMenuEnabled(false);
@@ -19,6 +20,8 @@ void MainWindow::test() {
   m_cefWidget->setAllowExecuteUnknownProtocolViaOS(false);
   m_cefWidget->setAutoDestoryCefWhenCloseEvent(false);
   m_cefWidget->setGeometry(0, 0, 600, 600);
+  m_cefWidget->addResourceProvider(new CefResourceHandler(), "123");
+  m_cefWidget->navigateToUrl("http://localhost:8000/login.html");
   
 
   connect(m_cefWidget,

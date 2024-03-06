@@ -3,7 +3,7 @@
 #include "mainwindow.h"
 #include "CefWnd.h"
 #include "cefapphandler.h"
-
+#include "QCefSetting.h"
 
 #pragma execution_character_set("utf-8")
 
@@ -18,26 +18,28 @@ int main(int argc, char* argv[]) {
   QApplication a(argc, argv);
 
   SetAppHandler(new CefAppHandler());
+  
   InitializeQCef();
 
-   MainWindow w;
+  MainWindow w;
   w.test();
   w.show();
-  /* CefWnd wnd(false, false);
+  //todo È¥µô
+    //QCefSetting::setResourceMap({{"login.html", {123, "PAGE"}}});
+
+
+  /*CefWnd wnd(false, false);
   wnd.setGeometry(100, 100, 600, 600);
 
   wnd.setUsingGLWidget(false);
   wnd.setOsrEnabled(false);
-  wnd.setContextMenuEnabled(false);
+  wnd.setContextMenuEnabled(true);
   wnd.setUsingHideInsteadClose(false);
   wnd.setAutoAddDevToolsContextMenu(false);
   wnd.setInitSize(QSize(600, 600));
-  wnd.setInitUrl("http://www.baidu.com");
+  wnd.setInitUrl("http://qcefwidget/login.html");
   wnd.setupUi();
   wnd.show();*/
-  
- 
-
   
 
   int iret = a.exec();

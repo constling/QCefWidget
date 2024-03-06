@@ -16,7 +16,7 @@ CefString QCefGlobalSetting::accept_language_list;
 CefString QCefGlobalSetting::debug_log_path;
 bool QCefGlobalSetting::persist_session_cookies = false;
 bool QCefGlobalSetting::persist_user_preferences = true;
-int QCefGlobalSetting::remote_debugging_port = 0;
+int QCefGlobalSetting::remote_debugging_port = 9223;
 bool QCefGlobalSetting::gpu_enabled = true;
 bool QCefGlobalSetting::osr_enabled = true;
 cef_log_severity_t QCefGlobalSetting::loglevel = LOGSEVERITY_WARNING;

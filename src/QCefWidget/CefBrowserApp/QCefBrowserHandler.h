@@ -300,12 +300,18 @@ class QCefBrowserHandler : public CefClient,
   virtual void OnProtocolExecution(CefRefPtr<CefBrowser> browser,
                                    const CefString& url,
                                    bool& allow_os_execution) override;
-#elif CEF_VERSION_MAJOR >= 76
-//todo lingxing
-  /* virtual CefResourceRequestHandler::ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
+#elif CEF_VERSION_MAJOR < 109
+
+    virtual CefResourceRequestHandler::ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
                        CefRefPtr<CefFrame> frame,
                        CefRefPtr<CefRequest> request,
-                       CefRefPtr<CefRequestCallback> callback) override;*/
+                       CefRefPtr<CefRequestCallback> callback) override;
+ #elif CEF_VERSION_MAJOR >= 109
+    virtual CefResourceRequestHandler::ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
+                                           CefRefPtr<CefFrame> frame,
+                                           CefRefPtr<CefRequest> request,
+                                           CefRefPtr<CefCallback> callback) override;
+ #endif
 
   virtual CefRefPtr<CefResourceHandler> GetResourceHandler(CefRefPtr<CefBrowser> browser,
                      CefRefPtr<CefFrame> frame,
@@ -315,7 +321,7 @@ class QCefBrowserHandler : public CefClient,
                            CefRefPtr<CefFrame> frame,
                            CefRefPtr<CefRequest> request,
                            bool& allow_os_execution) override;
-#endif
+
 #pragma endregion CefRequestHandler
 
 #pragma region CefRenderHandler

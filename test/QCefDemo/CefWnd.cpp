@@ -21,6 +21,8 @@ CefWnd::CefWnd(bool frameless, bool translucentWindowBackground, QWidget* parent
     pCefGLWidget_(nullptr) {
   //setAttribute(Qt::WA_DeleteOnClose, true);
   this->setResizeable(true);
+
+
 }
 
 CefWnd::~CefWnd() {}
